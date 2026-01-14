@@ -23,19 +23,8 @@ def register_user(user_create: UserCreateSchema, session: Session = Depends(get_
             detail="Email already registered"
         )
 
-    # Hash the password
-    hashed_password = get_password_hash(user_create.password)
-
-    # Create the user
-    db_user = User(
-        email=user_create.email,
-        full_name=user_create.full_name,
-        hashed_password=hashed_password
-    )
-
-    session.add(db_user)
-    session.commit()
-    session.refresh(db_user)
+    # Create the user using the service function
+    db_user = create_user(session=session, user_create=user_create)
 
     return db_user
 

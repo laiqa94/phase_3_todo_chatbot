@@ -1,7 +1,8 @@
-import os
 from logging.config import fileConfig
+
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
+
 from alembic import context
 
 # this is the Alembic Config object, which provides
@@ -21,7 +22,7 @@ from app.models.task import Task
 from sqlmodel import SQLModel
 target_metadata = SQLModel.metadata
 
-# Other values from the config, defined by the needs of env.py,
+# other values from the config, defined by the needs of env.py,
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
