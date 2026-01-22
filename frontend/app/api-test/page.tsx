@@ -8,7 +8,7 @@ const ApiTestPage = () => {
   const [testResult, setTestResult] = useState<{
     success: boolean;
     message: string;
-    data?: any;
+    data?: Record<string, unknown> | unknown[];
     error?: string;
   } | null>(null);
   const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ const ApiTestPage = () => {
       setTestResult({
         success: true,
         message: 'Successfully fetched user data',
-        data: userData
+        data: userData as Record<string, unknown> | unknown[]
       });
     } catch (error) {
       setTestResult({
@@ -48,7 +48,7 @@ const ApiTestPage = () => {
       setTestResult({
         success: true,
         message: 'Successfully sent chat message',
-        data: response
+        data: response as Record<string, unknown> | unknown[]
       });
     } catch (error) {
       setTestResult({
@@ -87,7 +87,13 @@ const ApiTestPage = () => {
         {testResult && (
           <div className={`p-4 rounded ${testResult.success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
             <h3 className="font-bold">{testResult.message}</h3>
-            {testResult.data && <pre className="mt-2 text-sm overflow-auto">{JSON.stringify(testResult.data, null, 2)}</pre>}
+            {testResult.data && (
+              <pre className="mt-2 text-sm overflow-auto">
+                {typeof testResult.data === 'object' && testResult.data !== null
+                  ? JSON.stringify(testResult.data, null, 2)
+                  : String(testResult.data)}
+              </pre>
+            )}
             {testResult.error && <p className="mt-2"><strong>Error:</strong> {testResult.error}</p>}
           </div>
         )}
