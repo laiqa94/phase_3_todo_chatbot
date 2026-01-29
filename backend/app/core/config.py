@@ -5,7 +5,7 @@ from typing import List, Optional
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Todo Backend API"
     API_V1_STR: str = "/api/v1"
-    BACKEND_CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:3001", "http://localhost:3002", "http://localhost:3003"]  # Common frontend ports
+    BACKEND_CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:3001", "http://localhost:3002", "http://localhost:3003", "https://laiqak-chatbot-ai.hf.space"]  # Common frontend ports and deployed backend
 
     # Database settings
     DATABASE_URL: str = "sqlite:///./todo_backend.db"  # Default to SQLite for development

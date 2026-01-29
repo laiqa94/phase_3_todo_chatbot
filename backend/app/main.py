@@ -31,6 +31,7 @@ try:
     from ai_chatbot.api.chat_endpoint import router as chat_router
     app.include_router(chat_router, prefix="/api/v1", tags=["chat"])
     print("Chat router included")
+    print(f"Routes after chat: {len(app.routes)}")
 except ImportError as e:
     print(f"Could not import chat router: {e}")
     print("AI Chatbot features will not be available")

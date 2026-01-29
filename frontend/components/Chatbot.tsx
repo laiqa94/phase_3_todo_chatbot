@@ -59,24 +59,31 @@ const Chatbot = ({ userId }: { userId: number }) => {
       };
       console.log('Chatbot: Adding AI message:', aiMessage);
 
-      setMessages(prev => [...prev, aiMessage]);
-      console.log('Chatbot: Messages after adding AI response:', [...messages, userMessage, aiMessage]);
+      // Prepare all messages to be added at once (AI response + tool results)
+      const newMessages = [aiMessage];
 
-      // If tools were executed, show the results
+      // If tools were executed, add their results as well
       if (response.tool_results && response.tool_results.length > 0) {
         response.tool_results.forEach((toolResult) => {
           if (toolResult.result?.message) {
             const toolResultMessage: Message = {
-              id: Date.now() + 2,
+              id: Date.now() + Math.floor(Math.random() * 1000),
               role: 'assistant',
               content: `Tool Result: ${toolResult.result.message}`,
               timestamp: new Date().toISOString(),
             };
-            setMessages(prev => [...prev, toolResultMessage]);
-            console.log('Chatbot: Added tool result message:', toolResultMessage);
+            newMessages.push(toolResultMessage);
+            console.log('Chatbot: Prepared tool result message:', toolResultMessage);
           }
         });
       }
+
+      // Update state with all new messages at once
+      setMessages(prev => {
+        const updatedMessages = [...prev, ...newMessages];
+        console.log('Chatbot: Messages after adding AI response and tool results:', updatedMessages);
+        return updatedMessages;
+      });
     } catch (error) {
       console.error('Error sending message:', error);
 
