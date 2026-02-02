@@ -370,6 +370,7 @@ async function handler(req: Request, ctx: { params: Promise<{ path: string[] }> 
               }, { status: 200 });
             }
           }
+        }
       }
 
       // Special handling for 401 Unauthorized - this might be due to missing/invalid token in development
