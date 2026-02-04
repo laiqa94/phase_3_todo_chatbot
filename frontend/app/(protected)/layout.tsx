@@ -16,7 +16,7 @@ export default async function ProtectedLayout({ children }: { children: React.Re
           {children}
         </div>
       </main>
-      {session.user?.id && <Chatbot userId={session.user.id} />}
+      {session.user?.id && <Chatbot userId={Number(session.user.id)} />}
     </div>
   );
 }
