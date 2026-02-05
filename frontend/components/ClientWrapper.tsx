@@ -86,17 +86,14 @@ const ClientWrapper = () => {
               setTokenSynced(true);
               console.log('Token synced to cookies successfully');
             } else {
-              console.error('Failed to sync token to cookies:', response.statusText);
-              // Still set as synced to allow app to continue, but with potential auth issues
+              console.warn(`Token sync failed (${response.status}): ${response.statusText}`);
               setTokenSynced(true);
             }
           } catch (error) {
-            console.error('Error syncing token to cookies:', error);
-            // Still set as synced to allow app to continue, but with potential auth issues
+            console.warn('Token sync error (continuing anyway):', error);
             setTokenSynced(true);
           }
         } else {
-          // If no token, still mark as synced to allow app to continue
           setTokenSynced(true);
         }
       }
