@@ -1,15 +1,51 @@
-import Link from "next/link";
+"use client";
 
-import { apiFetchServer } from "@/lib/apiServer";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
 import type { Task } from "@/types/task";
 
-export default async function DashboardPage() {
-  // MVP: derive counts from tasks list. If backend provides a summary endpoint later,
-  // swap to that without changing UI.
-  // NOTE: API path shape may differ; adjust to real backend when known.
-  const tasks = await apiFetchServer<Task[]>("/api/me/tasks", {
-    method: "GET",
-  });
+export default function DashboardPage() {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Use mock data for now
+    const mockTasks: Task[] = [
+      {
+        id: 1,
+        title: "Sample Task 1",
+        description: "This is a sample task",
+        completed: false,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        user_id: 1
+      },
+      {
+        id: 2,
+        title: "Sample Task 2",
+        description: "This is another sample task",
+        completed: true,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        user_id: 1
+      }
+    ];
+    
+    setTasks(mockTasks);
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="grid gap-4 sm:gap-6 p-4 sm:p-0">
+        <div className="text-center sm:text-left">
+          <h1 className="text-xl sm:text-2xl font-semibold text-zinc-900">Dashboard</h1>
+          <p className="mt-1 text-sm text-zinc-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   const total = tasks.length;
   const completed = tasks.filter((t) => t.completed).length;
