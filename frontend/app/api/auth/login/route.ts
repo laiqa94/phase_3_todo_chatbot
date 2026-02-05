@@ -33,7 +33,7 @@ export async function POST(req: Request) {
       if (mockResponse.accessToken) {
         cookieStore.set("access_token", mockResponse.accessToken, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
+          secure: false,
           sameSite: "lax",
           path: "/",
           maxAge: 30 * 60,
@@ -43,7 +43,7 @@ export async function POST(req: Request) {
       if (mockResponse.user?.id) {
         cookieStore.set("user_id", mockResponse.user.id.toString(), {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
+          secure: false,
           sameSite: "lax",
           path: "/",
           maxAge: 30 * 60,
@@ -76,7 +76,7 @@ export async function POST(req: Request) {
     if (data.accessToken) {
       cookieStore.set("access_token", data.accessToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
         sameSite: "lax",
         path: "/",
         maxAge: 30 * 60,
@@ -86,7 +86,7 @@ export async function POST(req: Request) {
     if (data.user?.id) {
       cookieStore.set("user_id", data.user.id.toString(), {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
         sameSite: "lax",
         path: "/",
         maxAge: 30 * 60,
